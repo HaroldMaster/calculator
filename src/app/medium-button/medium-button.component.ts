@@ -16,17 +16,24 @@ import { NumberBoxComponent } from '../number-box/number-box.component';
   styleUrls: ['./medium-button.component.scss']
 })
 export class MediumButtonComponent implements OnInit {
-  numberButtons : {[key:number]:number} = {}
+  numberAndOperationButtons : {[key:number]:string} = {}
   constructor( private operationsService: OperationsService) {
-      this.numberButtons = operationsService.numberButtons;
+      this.numberAndOperationButtons = operationsService.numberAndOperationButtons;
    }
-  @Input() numberKeyboard: number = 0;
+ // @Input() numberKeyboard: number = 0;
   @Output() buttonClick: EventEmitter<any> = new EventEmitter();
-   position : number = 0;
+   //position : number = 0;
   ngOnInit(): void {
   }
   emitBoxClick(position:number): void {
-  
     this.buttonClick.emit(this.operationsService.changeScreen(position));
+  }
+
+  emptyBox():void {
+    this.buttonClick.emit(this.operationsService.emptyScreen());
+  }
+
+  resolveOperation(): void {
+    this.buttonClick.emit(this.operationsService.resolveOperation(this.operationsService.numberScreen));
   }
 }

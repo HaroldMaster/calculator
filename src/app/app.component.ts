@@ -8,7 +8,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'calculator';
   screenValue : number = 0;
-  getPosition(value : number){
+  numberBox(value : number){
+    //console.log('get pos', value);
     this.screenValue=value;
   }
 }

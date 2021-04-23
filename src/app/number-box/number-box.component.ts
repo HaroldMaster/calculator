@@ -16,7 +16,6 @@ import mediumButtonStories from '../medium-button/medium-button.stories';
 })
 export class NumberBoxComponent implements OnInit {
   @Input() screenNumber: number = 0;
-  //@Output() boxShow: EventEmitter<any> = new EventEmitter();
 
   constructor() {
 
@@ -25,8 +24,6 @@ export class NumberBoxComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  changeScreen(): void {
-    this.screenNumber = 7;
-  }
+  
 
 }
