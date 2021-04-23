@@ -1,0 +1,5 @@
+<button (click)="emitBoxClick(+number.key)" class="medium-button"  *ngFor="let number of numberButtons | keyvalue  ">
+    <div  class="medium-button__number" >
+       {{ number.value }}
+    </div>
+</button>

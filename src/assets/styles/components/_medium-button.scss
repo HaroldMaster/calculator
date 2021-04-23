@@ -1,0 +1,18 @@
+.medium-button{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #0452AD ;
+    border-radius: 1.2rem;
+   
+    
+    &__number{
+        color: aliceblue;
+        font-size: 2.5rem;
+        font-weight: bold;
+        
+    }
+}
