@@ -16,7 +16,6 @@ export class AppComponent {
   }
 
   numberBox(value : number){
-    console.log({value});
     this.screenValue = this.operationsService.changeScreen(value);
   }
 }

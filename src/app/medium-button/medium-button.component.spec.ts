@@ -28,7 +28,6 @@ describe('MediumButtonComponent', () => {
     //given
     component.numberAndOperationButtons = {2:'7'};
     fixture.detectChanges();
-    console.log(fixture.debugElement.nativeElement.innerHTML);
     const button = fixture.debugElement.query(By.css('.medium-button'));
     const buttonClickSpy = spyOn(component.buttonClick, 'emit');
     //when

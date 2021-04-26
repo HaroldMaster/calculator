@@ -30,12 +30,10 @@ export class OperationsService {
   resultOnScreen: boolean = false;
   numberScreen: string = '';
   changeScreen(position: number): string {
-    console.log(position); //?
-    console.log(this.resultOnScreen);
+
     position = this.restoreAfterResult(position);
 
     if (this.resultOnScreen) {
-      console.log('aqui');
 
       switch (position) {
         case ButtonType.AC:
@@ -52,7 +50,6 @@ export class OperationsService {
         default:
           this.numberScreen = this.numberAndOperationButtons[position];
           this.resultOnScreen = false;
-          console.log(this.numberScreen);
           return this.numberScreen;
       }
     }
@@ -63,7 +60,6 @@ export class OperationsService {
         return this.numberScreen;
       case ButtonType.Equal:
         this.numberScreen = this.errorHandler();
-        console.log(this.resultOnScreen);
         return this.numberScreen;
       default:
         this.resultOnScreen = false;
@@ -88,7 +84,6 @@ export class OperationsService {
     if (this.numberScreen != ScreenValue.error) {
       result = eval(expression) + '';
       this.resultOnScreen =true;
-      console.log(typeof result);
       return result;
     } else {
       result = ScreenValue.initialValue;
@@ -127,9 +122,7 @@ export class OperationsService {
       return screenValue;
     } else {
       try {
-        console.log(this.numberScreen)
         screenValue = this.resolveOperation(this.numberScreen);
-        console.log(screenValue)
       } catch (error) {
         screenValue = ScreenValue.error;
         this.resultOnScreen = false;
