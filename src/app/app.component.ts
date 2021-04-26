@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { OperationsService } from './core/operations.service';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +8,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'calculator';
-  screenValue : number = 0;
+  screenValue : string = '0';
+  numberAndOperationButtons: {[key:number]:string}; 
+
+  constructor(private operationsService: OperationsService) {
+    this.numberAndOperationButtons = this.operationsService.numberAndOperationButtons;
+  }
+
   numberBox(value : number){
-    //console.log('get pos', value);
-    this.screenValue=value;
+    console.log({value});
+    this.screenValue = this.operationsService.changeScreen(value);
   }
 }

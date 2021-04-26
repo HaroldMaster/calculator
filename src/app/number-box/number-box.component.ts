@@ -15,7 +15,7 @@ import mediumButtonStories from '../medium-button/medium-button.stories';
   styleUrls: ['./number-box.component.scss']
 })
 export class NumberBoxComponent implements OnInit {
-  @Input() screenNumber: number = 0;
+  @Input() screenNumber: string = '';
 
   constructor() {
 

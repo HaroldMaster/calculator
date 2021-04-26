@@ -1,11 +1,11 @@
 <button (click)="emitBoxClick(+numberAndOperations.key)" class="medium-button item{{+numberAndOperations.key}}"  *ngFor="let numberAndOperations of numberAndOperationButtons | keyvalue  ">
-    <div  class="medium-button__number" *ngIf="+numberAndOperations.key == 0" (click) = 'emptyBox()'>
+    <div  class="medium-button__number" *ngIf="+numberAndOperations.key == buttonType.AC">
         {{ numberAndOperations.value }}       
      </div>
-     <div  class="medium-button__number" *ngIf="+numberAndOperations.key == 5" (click) = 'resolveOperation()'>
+     <div  class="medium-button__number" *ngIf="+numberAndOperations.key == buttonType.Equal">
         {{ numberAndOperations.value }}       
      </div>
-    <div  class="medium-button__number" *ngIf="+numberAndOperations.key != 0 && +numberAndOperations.key != 5 ">
+    <div  class="medium-button__number" *ngIf="+numberAndOperations.key != buttonType.AC && +numberAndOperations.key != buttonType.Equal ">
         {{ numberAndOperations.value }}       
      </div>
 

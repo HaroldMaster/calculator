@@ -1,6 +1,6 @@
 <div class="calculator">
   <div class="calculator__base">
       <app-number-box [screenNumber] = "screenValue"></app-number-box>
-      <app-medium-button (buttonClick) = "numberBox($event)" ></app-medium-button>
+      <app-medium-button (buttonClick) = "numberBox($event)" [numberAndOperationButtons]="numberAndOperationButtons" ></app-medium-button>
   </div>
 </div>

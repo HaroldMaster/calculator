@@ -1,53 +1,89 @@
 import { Injectable } from '@angular/core';
-
+import { ButtonType } from '../medium-button/medium-button.model';
+import { ScreenValue } from '../number-box/number-box-model';
+import { KeyPosition } from '../core/operation.model';
 @Injectable({
   providedIn: 'root'
 })
 export class OperationsService {
 
+  private SCREEN_MAX_LENGTH: number = 6;
   constructor() { }
-  numberAndOperationButtons: {[key:string]:string} = {
+  numberAndOperationButtons: {[key:number]:string} = {
     
-    0: 'AC',
-    1: '7',
-    2: '3',
-    3: '2',
-    4: '1',
-    5: '=',
-    6: '0',
-    7: '+',
-    8: '-',
-    10: '8',
-    11: '9',
-    12: '%',
-    13: '4',
-    14: '5',
-    15: '6',
-    16: '*',
+    [KeyPosition.AC] :      'AC',
+    [KeyPosition.seven]:    '7',
+    [KeyPosition.three]:    '3',
+    [KeyPosition.two]:      '2',
+    [KeyPosition.one]:      '1',
+    [KeyPosition.equal]:    '=',
+    [KeyPosition.zero]:     '0',
+    [KeyPosition.plus]:     '+',
+    [KeyPosition.less]:     '-',
+    [KeyPosition.eight]:    '8',
+    [KeyPosition.nine]:     '9',
+    [KeyPosition.percent]:  '%',
+    [KeyPosition.four]:     '4',
+    [KeyPosition.five]:     '5',
+    [KeyPosition.six]:      '6',
+    [KeyPosition.asterisk]: '*',
     
   };
   resultOnScreen : boolean = false;
   numberScreen : string = '';
   changeScreen(position:number): string {
-    if(this.resultOnScreen){
-      if(this.numberScreen != '0'){
-        this.numberScreen='';
-      }
-      if(this.numberScreen === ''){
-        this.numberScreen='0';
-      }
+
+    console.log(position) //?
+    console.log(this.resultOnScreen) 
+    if(position==5 && this.resultOnScreen ==true){
+      position = ButtonType.AC;
     }
-    if(position===0){
-      this.numberScreen = '0';
+    if (this.resultOnScreen) {
+      console.log('aqui')
+      if(/\+|\-|\*|\%/.test(this.numberAndOperationButtons[position])) {
+        console.log(this.resultOnScreen) 
+          this.numberScreen += this.numberAndOperationButtons[position];
+          this.resultOnScreen=false;
+          return this.numberScreen;
+        }
+      
+      if (position === ButtonType.AC) {
+        this.numberScreen = ScreenValue.initialValue;
+        return this.numberScreen;
+      } 
+
+
+      this.numberScreen = this.numberAndOperationButtons[position];
+      this.resultOnScreen = false;
+        console.log(this.numberScreen);
+
+      
       return this.numberScreen;
-      }
-    if(position===5){
+    }
+
+    if(position === ButtonType.AC){
+      this.numberScreen = ScreenValue.initialValue;
+      return this.numberScreen;
+    }
+
+    if(position === ButtonType.Equal){
+        /*if(/^\d+$/.test(this.numberScreen)) {
+           return this.numberScreen; 
+        }*/
+
         this.resultOnScreen = true;
-          if(this.numberScreen == 'undefined'){
-            this.numberScreen='Syntax error'
+          if(this.numberScreen == ScreenValue.wrongOperation){
+            this.numberScreen=ScreenValue.error;
             return this.numberScreen;
            }
            else {
+            try {
+              this.resolveOperation(this.numberScreen);
+            } catch (error) {
+              this.numberScreen = ScreenValue.error;
+              this.resultOnScreen = false;
+              return this.numberScreen
+            }
             return this.numberScreen;
              
            }
@@ -56,9 +92,16 @@ export class OperationsService {
           this.resultOnScreen=false;
         }
     
-    if(this.numberScreen.length<=6){
-      
-      if(this.numberScreen === '0'){
+    console.log(this.numberScreen)
+        
+    if(this.numberScreen === ScreenValue.error && position !== ButtonType.Equal) {
+      this.numberScreen = this.numberAndOperationButtons[position]+'';
+      return this.numberScreen;
+    }
+
+
+    if(this.numberScreen.length<=this.SCREEN_MAX_LENGTH){
+      if(this.numberScreen ===ScreenValue.initialValue){
         this.numberScreen = this.numberAndOperationButtons[position]+'';
       }
       else {
@@ -69,21 +112,14 @@ export class OperationsService {
     return this.numberScreen;
   }
 
-  emptyScreen(): void {
-    this.numberScreen = '0';
-  }
-  
   resolveOperation(expression : string): void{
-    if(this.numberScreen != 'Syntax error'){
+    if(this.numberScreen != ScreenValue.error){
       this.numberScreen = eval(expression) +'';
       console.log(expression);
     }
     else {
-      this.numberScreen = '0';
+      this.numberScreen = ScreenValue.initialValue;
+      this.resultOnScreen = false;
     }
-  
-    
-    
   }
-  
 }

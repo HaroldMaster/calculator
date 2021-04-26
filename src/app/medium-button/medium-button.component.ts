@@ -1,14 +1,11 @@
-import { inject } from '@angular/core';
 import {
   Component,
   OnInit,
-  ChangeDetectionStrategy,
   Input,
   Output,
   EventEmitter,
 } from '@angular/core';
-import { OperationsService } from '../core/operations.service';
-import { NumberBoxComponent } from '../number-box/number-box.component';
+import { ButtonType } from './medium-button.model';
 
 @Component({
   selector: 'app-medium-button',
@@ -16,24 +13,20 @@ import { NumberBoxComponent } from '../number-box/number-box.component';
   styleUrls: ['./medium-button.component.scss']
 })
 export class MediumButtonComponent implements OnInit {
-  numberAndOperationButtons : {[key:number]:string} = {}
-  constructor( private operationsService: OperationsService) {
-      this.numberAndOperationButtons = operationsService.numberAndOperationButtons;
+  @Input()
+  numberAndOperationButtons: {[key:number]:string} = {}
+  @Output() buttonClick: EventEmitter<any> = new EventEmitter();
+  constructor() {
    }
  // @Input() numberKeyboard: number = 0;
-  @Output() buttonClick: EventEmitter<any> = new EventEmitter();
+  
    //position : number = 0;
+
+  buttonType = ButtonType;
+
   ngOnInit(): void {
   }
   emitBoxClick(position:number): void {
-    this.buttonClick.emit(this.operationsService.changeScreen(position));
-  }
-
-  emptyBox():void {
-    this.buttonClick.emit(this.operationsService.emptyScreen());
-  }
-
-  resolveOperation(): void {
-    this.buttonClick.emit(this.operationsService.resolveOperation(this.operationsService.numberScreen));
+    this.buttonClick.emit(position);
   }
 }
